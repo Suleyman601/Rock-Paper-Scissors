@@ -1,0 +1,13 @@
+#container{
+  display:flex;
+  gap: 200px;
+  padding-top: 30px;
+}
+
+#div1, #div2{
+  width: 30%;
+}
+
+#result {
+  display: block;
+}

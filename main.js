@@ -1,3 +1,5 @@
+let playerScore = 0;
+let computerScore = 0;
 function computerPlay() {
   let randomNum = Math.floor(Math.random() * 3 + 1);
 
@@ -11,31 +13,47 @@ function computerPlay() {
 }
 
 function playRound(computerSelection, playerSelection) {
-  if (computerSelection === playerSelection) {
-    return "Tie";
-  }
+  document.getElementById('result').textContent = '';
+  document.getElementById('computerSelect').textContent = 'Computer: ' + computerSelection;
+  document.getElementById('playerSelect').textContent = 'Player: ' + playerSelection;
+  
+
+  if (computerSelection === playerSelection)
+    return;
 
   if (
     (computerSelection === "rock" && playerSelection === "paper") ||
-    (computerSelection == "paper" && playerSelection === "scissors") ||
+    (computerSelection === "paper" && playerSelection === "scissors") ||
     (computerSelection === "scissors" && playerSelection === "rock")
   ) {
-    return "you win";
+    ++playerScore;
+    document.getElementById('playerScore').textContent = 'Player: ' + playerScore;
   } else {
-    return "you lose";
+    ++computerScore;
+    document.getElementById('computerScore').textContent = 'Computer: ' + computerScore;
   }
+
+  if(playerScore === 5){
+    document.getElementById('result').textContent = 'You Win';
+    playerScore = 0;
+    computerScore = 0;
+    document.getElementById('playerScore').textContent = 'Player: ' + playerScore;
+    document.getElementById('computerScore').textContent = 'Computer: ' + computerScore;
+  }
+
+  if(computerScore === 5){
+    document.getElementById('result').textContent = 'You Lose';
+    playerScore = 0;
+    computerScore = 0;
+    document.getElementById('playerScore').textContent = 'Player: ' + playerScore;
+    document.getElementById('computerScore').textContent = 'Computer: ' + computerScore;
+  }
+
 }
 
-function game() {
-  for (let i = 0; i < 5; ++i) {
-    let computerChoice = computerPlay();
-    let playerChoice = prompt("Enter choice");
-    playerChoice.toLowerCase();
-    console.log(`Round ${i + 1}`);
-    console.log(`Computer: ${computerChoice}`);
-    console.log(`playerChoice: ${playerChoice}`);
-    console.log(playRound(computerChoice, playerChoice));
-    console.log("\n");
-  }
+function play(e){
+  playRound(computerPlay(), e.target.value);
 }
-game();
+let buttons = document.querySelectorAll('button');
+buttons.forEach(btn => btn.addEventListener('click', play));
+
